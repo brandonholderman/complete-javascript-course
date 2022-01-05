@@ -22,16 +22,25 @@ const restaurant = {
     },
   },
 
-  order: function(starterIndex, mainIndex) {
+  order: function (starterIndex, mainIndex) {
     return [this.starterMenu[starterIndex], this.mainMenu[mainIndex]];
   },
 
-  orderDelivery: function({time, address, starterIndex, mainIndex}) {
+  orderDelivery: function ({ time, address, starterIndex, mainIndex }) {
     console.log(
       `Order recieved! ${this.starterMenu[starterIndex]} 
       and ${this.mainMenu[mainIndex]} will be delivered 
       to ${address} at ${time}`
     );
+  },
+
+  orderPasta: function (ing1, ing2, ing3) {
+    console.log(`Here is your pasta with ${ing1}, ${ing2} and ${ing3}`);
+  },
+
+  orderPizza: function (mainIngredient, ...otherIngredients) {
+    console.log(mainIngredient);
+    console.log(otherIngredients);
   },
 };
 
@@ -40,7 +49,7 @@ restaurant.orderDelivery({
   address: 'Dexter Ave N',
   mainIndex: 2,
   starterIndex: 2,
-})
+});
 
 const arr = [2, 3, 4];
 const a = arr[0];
@@ -48,7 +57,7 @@ const b = arr[1];
 const c = arr[2];
 
 // Destructuring an array
-const [x, y ,z] = arr;
+const [x, y, z] = arr;
 
 // Both will return the same data
 console.log(a, b, c);
@@ -78,19 +87,19 @@ const [i, , [j, k]] = nested;
 console.log(i, j, k);
 
 // Destructuring an object
-const {name, categories, openingHours} = restaurant;
+const { name, categories, openingHours } = restaurant;
 console.log(name, categories, openingHours);
 
 // Assigning object keys to variables
 const {
-  name: restaurantName, 
-  categories: cuisine, 
-  openingHours: hours
+  name: restaurantName,
+  categories: cuisine,
+  openingHours: hours,
 } = restaurant;
 console.log(restaurantName, cuisine, hours);
 
 // Assigning default values
-const {menu = [], starterMenu: starters = []} = restaurant;
+const { menu = [], starterMenu: starters = [] } = restaurant;
 console.log(menu, starters);
 
 // Mutating variables
@@ -98,12 +107,14 @@ let d = 111;
 let f = 999;
 console.log(d, f);
 
-const obj = {d: 23, f: 7, t: 14};
-({d, f} = obj);
+const obj = { d: 23, f: 7, t: 14 };
+({ d, f } = obj);
 console.log(d, f); // Returns value after mutation
 
 // Nested objects
-const {fri: {open, close}} = openingHours;
+const {
+  fri: { open, close },
+} = openingHours;
 console.log(open, close);
 
 // Using the spread operator
@@ -117,8 +128,87 @@ console.log(newArr);
 
 console.log(...newArr); // returns [1, 2, 7, 8, 9]
 
+// Add item to array
 const newMenu = [...restaurant.mainMenu, `Gnocchi`];
 console.log(newMenu);
 
+// Join two arrays
 const fullMenu = [...restaurant.mainMenu, ...restaurant.starterMenu];
 console.log(fullMenu);
+
+// Iterables: arrays, strings, maps, sets. NOT objects
+const str = 'Brandon';
+const letters = [...str, ' ', 'H.'];
+console.log(letters);
+console.log(...str);
+
+// const ingredients = [
+//   prompt("Let's make pasta! Ingredient1?"),
+//   prompt("Let's make pasta! Ingredient2?"),
+//   prompt("Let's make pasta! Ingredient3?"),
+// ];
+// console.log(ingredients);
+
+// restaurant.orderPasta(...ingredients);
+
+// Objects
+const newRestaurant = { foundedIn: 1998, ...restaurant, Founder: 'Guiseppe' };
+console.log(newRestaurant);
+
+// Changes restaurant name in copy
+const restaurantCopy = { ...restaurant };
+restaurantCopy.name = 'Ristorante Roma';
+
+// Original object name still persists
+console.log(restaurantCopy.name);
+console.log(restaurant.name);
+
+// Rest Operator Destructuring
+
+// Array examples
+// Spread because ... is on right side of =
+const numbersArr = [5, 6, 7];
+const nonRestArr = [1, 2, 3, ...numbersArr];
+
+// Rest becasue ... is on left side of =
+// Rest will convert the rest of the items in the array into a new array or object
+const [g, h, ...others] = [1, 2, 3, 4, 5, 6];
+console.log(g, h, others);
+
+// Rest operator needs to be the last item in the array
+// Only one rest allowed in destructuring assignment
+const [pizza, , risotto, ...otherFood] = [
+  ...restaurant.mainMenu,
+  ...restaurant.starterMenu,
+];
+console.log(pizza, risotto, ...otherFood);
+
+// Object examples
+const { sat, ...weekdays } = restaurant.openingHours;
+console.log(weekdays);
+
+// Rest Functions
+
+const add = (...numbers) => {
+  let sum = 0;
+  for (let i = 0; i < numbers.length; i++) {
+    sum += numbers[i];
+  }
+  console.log(sum);
+};
+
+// Spread operator expands, Rest operator contracts
+add(5, 4, 6, 7);
+
+const p = [22, 19, 59];
+add(...p);
+
+restaurant.orderPizza('mushroom', 'olives', 'onion', 'spinach');
+
+// Short-circuit evaluation
+console.log(3 || 'Brandon');
+console.log('' || 'Brandon');
+console.log(true || 0);
+console.log(undefined || null);
+
+console.log(undefined || 0 || '' || 'Hello' || 23 || null);
