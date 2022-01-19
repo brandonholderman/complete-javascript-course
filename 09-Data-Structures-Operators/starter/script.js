@@ -211,4 +211,20 @@ console.log('' || 'Brandon');
 console.log(true || 0);
 console.log(undefined || null);
 
+// Using || will evaluate conditions until it reaches a truthy value and will return that value
 console.log(undefined || 0 || '' || 'Hello' || 23 || null);
+
+// Using && will continue to evaluate consitions until it reaches a falsy value and will return that value
+console.log('Hello' && 23 && null && 'Brandon');
+
+// Practice example
+if (restaurant.orderPizza) {
+  restaurant.orderPizza('mushroom', 'spinach');
+}
+
+restaurant.orderPizza &&
+  restaurant.orderPizza('mushroom', 'pickles', 'spinach');
+
+restaurant.numGuests = 0;
+const guests = restaurant.numGuests || 10;
+console.log(guests);
