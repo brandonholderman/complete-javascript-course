@@ -225,6 +225,12 @@ if (restaurant.orderPizza) {
 restaurant.orderPizza &&
   restaurant.orderPizza('mushroom', 'pickles', 'spinach');
 
+// Nullish coelescing operator
 restaurant.numGuests = 0;
 const guests = restaurant.numGuests || 10;
 console.log(guests);
+
+// Nullish values: null or undefined
+// Continues to evaluate if nullish value is found else returns falsy value
+const guestCorrect = restaurant.numGuests ?? 10;
+console.log(guestCorrect);
